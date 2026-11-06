@@ -10,6 +10,12 @@ http {
     server_name _;
 
     location / {
+        # Reduce cache retention to 10s so that the application's internal address (PROXY_PASS) 
+        # can be found in the case of a redeployed or late-starting app container.
+        # fd12::10 is Railway's internal DNS (found in /etc/resolv.conf).
+        # https://stackoverflow.com/questions/60936400/how-to-make-nginx-re-resolve-dns
+        resolver [fd12::10] valid=10s;
+        
         auth_basic	"Restricted";
         auth_basic_user_file	/etc/nginx/.htpasswd;
         
