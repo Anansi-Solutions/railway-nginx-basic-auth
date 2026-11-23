@@ -3,6 +3,7 @@ FROM nginx:alpine AS runtime
 ARG PROXY_PASS=http://host.docker.internal:3000
 ARG PORT=4000
 ARG USERNAME=user
+ARG USERS=""
 ARG PASSWORD=password
 
 RUN echo "proxy_pass: $PROXY_PASS\nport: $PORT\nusername: $USERNAME\npassword: $PASSWORD"
@@ -12,6 +13,7 @@ RUN envsubst '$PROXY_PASS $PORT' < /etc/nginx/nginx.conf.template > /etc/nginx/n
 
 
 ENV USERNAME=$USERNAME
+ENV USERS=$USERS
 ENV PASSWORD=$PASSWORD
 RUN apk add --no-cache openssl
 COPY ./gen_passwd.sh /etc/nginx/gen_passwd.sh

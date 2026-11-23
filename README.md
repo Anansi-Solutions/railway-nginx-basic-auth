@@ -34,6 +34,10 @@ Example: `http://app-name.up.railway.app:3000`
 The port expose to public. Default is `80`.
 But someone said it's necessary for `Railway.app` detecting which port for nging.
 
+`USERS`
+
+Several accounts, as `user:password` pairs separated by spaces or newlines, e.g. `alice:pw1 bob:pw2`. Overrides `USERNAME`/`PASSWORD`.
+
 `USERNAME`
 
 Username for auth. Default is `user`.
