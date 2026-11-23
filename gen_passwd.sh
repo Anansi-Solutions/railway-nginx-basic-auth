@@ -1,10 +1,7 @@
 #!/bin/sh
 
-USER_NAME=${USERNAME}
-PASSWD=${PASSWORD}
-
-echo "Generating password for user ${USER_NAME}"
-
-CRYPTPASS=`openssl passwd -apr1 ${PASSWD}`
-
-echo "${USER_NAME}:${CRYPTPASS}" >> /etc/nginx/.htpasswd
+# USERS: user:password pairs, separated by newlines or spaces.
+for PAIR in ${USERS:-${USERNAME}:${PASSWORD}}; do
+  echo "Generating password for user ${PAIR%%:*}"
+  echo "${PAIR%%:*}:`openssl passwd -apr1 ${PAIR#*:}`" >> /etc/nginx/.htpasswd
+done
